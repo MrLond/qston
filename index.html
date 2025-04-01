@@ -6,8 +6,8 @@
   <title>Top Donators - Pls Donate</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background-color: #f4f4f4;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #e3f2fd, #fce4ec);
       color: #333;
       margin: 0;
       padding: 0;
@@ -20,57 +20,60 @@
       width: 90%;
       margin-top: 40px;
       background: white;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      padding: 30px 25px;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     }
     .message {
-      font-size: 18px;
-      margin-bottom: 20px;
+      font-size: 20px;
+      font-weight: bold;
+      color: #5e35b1;
+      text-align: center;
+      margin-bottom: 25px;
+    }
+    .leaderboard-title {
+      font-size: 24px;
+      text-align: center;
+      margin-bottom: 15px;
+      color: #1e88e5;
+      font-weight: 600;
     }
     .leaderboard {
       list-style: none;
       padding: 0;
+      margin: 0;
     }
     .leaderboard li {
-      padding: 10px;
+      padding: 12px 10px;
       border-bottom: 1px solid #ddd;
       display: flex;
       justify-content: space-between;
-      font-size: 16px;
+      font-size: 18px;
+      background-color: #fafafa;
+      border-radius: 8px;
+      margin-bottom: 8px;
     }
     .leaderboard li:last-child {
       border-bottom: none;
-    }
-    input, button {
-      padding: 10px;
-      font-size: 14px;
-      margin-top: 10px;
-      width: 100%;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <div class="message" id="customMessage">Your message here...</div>
-    <input type="text" id="messageInput" placeholder="Enter your custom message">
-    <button onclick="updateMessage()">Update Message</button>
-    <h2>Top Donators</h2>
-    <ul class="leaderboard" id="leaderboard">
+    <!-- Редактируемое сообщение -->
+    <div class="message">
+      <!-- Просто меняй текст ниже, это твой титул -->
+      🚀 Добро пожаловать в список топ-донатеров! 🌟
+    </div>
+
+    <div class="leaderboard-title">Top Donators</div>
+    <ul class="leaderboard">
       <li><span>User1</span><span>1000</span></li>
       <li><span>User2</span><span>800</span></li>
       <li><span>User3</span><span>650</span></li>
       <li><span>User4</span><span>500</span></li>
       <li><span>User5</span><span>300</span></li>
-      <li><span>User6</span><span>300</span></li>
     </ul>
   </div>
-
-  <script>
-    function updateMessage() {
-      const input = document.getElementById("messageInput").value;
-      document.getElementById("customMessage").innerText = input || "Your message here...";
-    }
-  </script>
 </body>
 </html>
