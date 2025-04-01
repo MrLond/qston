@@ -1,77 +1,75 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Qston — by Michael</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Top Donators - Pls Donate</title>
   <style>
     body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      color: #333;
       margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #0f0f0f;
-      color: #e0e0e0;
+      padding: 0;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      padding: 30px;
     }
-
-    h1 {
-      font-size: 3em;
-      margin-bottom: 0.2em;
-      color: #00ff99;
-    }
-
-    h2 {
-      font-weight: 400;
-      color: #cccccc;
-      margin-bottom: 1.5em;
-    }
-
-    p {
-      font-size: 1.1em;
+    .container {
       max-width: 600px;
-      text-align: center;
-      margin-bottom: 1em;
-      line-height: 1.6;
+      width: 90%;
+      margin-top: 40px;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
-
-    a {
-      color: #00ff99;
-      text-decoration: none;
-      font-weight: bold;
+    .message {
+      font-size: 18px;
+      margin-bottom: 20px;
     }
-
-    a:hover {
-      text-decoration: underline;
+    .leaderboard {
+      list-style: none;
+      padding: 0;
     }
-
-    .footer {
-      margin-top: 3em;
-      font-size: 0.8em;
-      color: #555;
+    .leaderboard li {
+      padding: 10px;
+      border-bottom: 1px solid #ddd;
+      display: flex;
+      justify-content: space-between;
+      font-size: 16px;
+    }
+    .leaderboard li:last-child {
+      border-bottom: none;
+    }
+    input, button {
+      padding: 10px;
+      font-size: 14px;
+      margin-top: 10px;
+      width: 100%;
     }
   </style>
 </head>
 <body>
-  <h1>Привет! 👋</h1>
-  <h2>Ты на сайте Qston</h2>
-  <p>Qston — это независимая команда, создающая современные digital-продукты, направленные на упрощение жизни и внедрение новых решений для достижения больших результатов.</p>
-  <p>Michael, основатель Qston</p>
- <p>
-  📬 Связь:
-  <a href="mailto:greymica12@gmail.com">greymica12@gmail.com</a>
-  |
-  <a href="https://t.me/imlond" target="_blank" style="display: inline-flex; align-items: center; gap: 5px; color: #00ff99; text-decoration: none;">
-    <span>Telegram</span>
-    <svg xmlns="http://www.w3.org/2000/svg" height="18" viewBox="0 0 24 24" fill="#00ff99">
-      <path d="M12 0C5.372 0 0 5.373 0 12s5.372 12 12 12 12-5.373 12-12S18.628 0 12 0zm5.6 8.5l-1.76 8.328c-.13.585-.468.73-.95.455l-2.62-1.932-1.26 1.215c-.14.14-.257.257-.525.257l.187-2.705 4.927-4.452c.215-.188-.048-.292-.335-.104l-6.515 4.103-2.806-.884c-.61-.192-.622-.61.127-.905l10.962-4.25c.51-.188.956.124.8.897z"/>
-    </svg>
-  </a>
-</p>
+  <div class="container">
+    <div class="message" id="customMessage">Your message here...</div>
+    <input type="text" id="messageInput" placeholder="Enter your custom message">
+    <button onclick="updateMessage()">Update Message</button>
+    <h2>Top Donators</h2>
+    <ul class="leaderboard" id="leaderboard">
+      <li><span>User1</span><span>1000</span></li>
+      <li><span>User2</span><span>800</span></li>
+      <li><span>User3</span><span>650</span></li>
+      <li><span>User4</span><span>500</span></li>
+      <li><span>User5</span><span>300</span></li>
+    </ul>
+  </div>
 
-  <p style="color: gray; font-size: 0.9em;">
-  © 2025 <strong>Qston</strong>. Все права не защищены — <em>пока что 😉</em>
-</p>
+  <script>
+    function updateMessage() {
+      const input = document.getElementById("messageInput").value;
+      document.getElementById("customMessage").innerText = input || "Your message here...";
+    }
+  </script>
+</body>
+</html>
