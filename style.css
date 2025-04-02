@@ -3,20 +3,27 @@ body {
   background: linear-gradient(135deg, #d1c4e9, #f8bbd0);
   margin: 0;
   padding: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
+
+.main-content {
+  display: flex;
+  gap: 40px;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  padding-top: 40px;
+}
+
 .container {
   max-width: 600px;
   width: 90%;
-  margin-top: 40px;
   background: #ffffffee;
   padding: 30px 25px;
   border-radius: 16px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
   position: relative;
 }
+
 .message {
   font-size: 22px;
   font-weight: bold;
@@ -24,6 +31,7 @@ body {
   text-align: center;
   margin-bottom: 25px;
 }
+
 .leaderboard-title {
   font-size: 26px;
   text-align: center;
@@ -31,12 +39,14 @@ body {
   color: #3949ab;
   font-weight: 700;
 }
+
 .leaderboard {
   list-style: none;
   padding: 0;
   margin: 0;
   counter-reset: leaderboard;
 }
+
 .leaderboard li {
   padding: 12px 14px;
   border-bottom: 1px solid #ccc;
@@ -48,6 +58,7 @@ body {
   margin-bottom: 10px;
   transition: transform 0.3s ease;
 }
+
 .leaderboard li::before {
   counter-increment: leaderboard;
   content: counter(leaderboard) ". ";
@@ -55,34 +66,42 @@ body {
   margin-right: 10px;
   color: #888;
 }
+
 .leaderboard li.first {
   background-color: #fff8dc;
   animation: shineGold 3s infinite ease-in-out;
 }
+
 .leaderboard li.first::before {
   content: counter(leaderboard) ". 🥇 ";
   color: gold;
 }
+
 .leaderboard li.second {
   background-color: #f0f0f0;
   animation: shineSilver 3s infinite ease-in-out;
 }
+
 .leaderboard li.second::before {
   content: counter(leaderboard) ". 🥈 ";
   color: silver;
 }
+
 .leaderboard li.third {
   background-color: #fbe5d6;
   animation: shineBronze 3s infinite ease-in-out;
 }
+
 .leaderboard li.third::before {
   content: counter(leaderboard) ". 🥉 ";
   color: #cd7f32;
 }
+
 .leaderboard li:hover {
   transform: scale(1.03);
   box-shadow: 0 0 20px rgba(138, 43, 226, 0.2), 0 0 30px rgba(138, 43, 226, 0.1);
 }
+
 .description {
   margin-top: 30px;
   font-size: 16px;
@@ -90,53 +109,55 @@ body {
   padding-top: 20px;
   border-top: 2px solid #ce93d8;
 }
+
 .description-title {
   font-size: 18px;
   font-weight: 600;
   margin-bottom: 10px;
   color: #8e24aa;
 }
+
 .rbx {
   width: 16px;
   height: 16px;
   vertical-align: middle;
   margin-right: 5px;
 }
+
 #last-update {
   text-align: center;
   font-size: 14px;
   color: #555;
   margin-top: 10px;
 }
+
 @keyframes shineGold {
   0% { box-shadow: 0 0 10px rgba(255, 215, 0, 0.3); }
   50% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.6); }
   100% { box-shadow: 0 0 10px rgba(255, 215, 0, 0.3); }
 }
+
 @keyframes shineSilver {
   0% { box-shadow: 0 0 10px rgba(192, 192, 192, 0.3); }
   50% { box-shadow: 0 0 20px rgba(192, 192, 192, 0.6); }
   100% { box-shadow: 0 0 10px rgba(192, 192, 192, 0.3); }
 }
+
 @keyframes shineBronze {
   0% { box-shadow: 0 0 10px rgba(205, 127, 50, 0.3); }
   50% { box-shadow: 0 0 20px rgba(205, 127, 50, 0.6); }
   100% { box-shadow: 0 0 10px rgba(205, 127, 50, 0.3); }
 }
 
+/* 💬 Feedback form */
 #feedback-form {
-  position: absolute;
-  top: 60px; /* ниже заголовка */
-  right: -280px; /* ближе к контейнеру */
-  width: 230px;
+  width: 260px;
   background: #f9e9fb;
   padding: 16px;
   border-radius: 14px;
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
   font-size: 14px;
-  z-index: 10;
   border: 1px solid #e1bee7;
-  transition: all 0.3s ease;
 }
 
 #feedback-form textarea {
