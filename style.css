@@ -22,8 +22,7 @@ body {
 }
 
 .container {
-  max-width: 600px;
-  width: 90%;
+  width: 600px; /* вместо 90% */
   background: #ffffffee;
   padding: 30px 25px;
   border-radius: 16px;
