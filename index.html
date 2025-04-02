@@ -1,42 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Top Donators</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- Форма вынесена ВНЕ container -->
-  <form id="feedback-form">
-    <label for="feedback-message">💬 Your Feedback:</label><br>
-    <textarea id="feedback-message" name="message" rows="4" required></textarea><br><br>
+  <div class="main-content">
+    <div class="container">
+      <div class="message">
+        🚀 Welcome🌟<br />
+        Saving for gamepasses — 51 / 1500 🎯<br />
+        Support = your name on the board 💖
+      </div>
 
-    <label>How do you feel?</label><br>
-    <input type="radio" name="mood" value="👍" required> 👍
-    <input type="radio" name="mood" value="👎"> 👎<br><br>
+      <div class="leaderboard-title">Top 10 Donators</div>
+      <ol class="leaderboard" id="leaderboard"></ol>
 
-    <button type="submit">Send</button>
-  </form>
+      <div id="last-update">Updated just now</div>
 
-  <div class="container">
-    <div class="message">
-      🚀 Welcome🌟<br>
-      Saving for gamepasses — 51 / 1500 🎯<br> 
-      Support = your name on the board 💖
+      <div class="description">
+        <div class="description-title">📌 Description</div>
+        Live-updating leaderboard ⏱️<br />
+        Climb by donating more 💸<br />
+        Roblox: @Din_Mane601
+      </div>
     </div>
 
-    <div class="leaderboard-title">Top 10 Donators</div>
-    <ol class="leaderboard" id="leaderboard"></ol>
+    <form id="feedback-form">
+      <label for="feedback-message">💬 Your Feedback:</label><br />
+      <textarea id="feedback-message" name="message" rows="4" required></textarea><br /><br />
 
-    <div id="last-update">Updated just now</div>
+      <label>How do you feel?</label><br />
+      <input type="radio" name="mood" value="👍" required /> 👍
+      <input type="radio" name="mood" value="👎" /> 👎<br /><br />
 
-    <div class="description">
-      <div class="description-title">📌 Description</div>
-      Live-updating leaderboard ⏱️<br>
-      Climb by donating more 💸<br>
-      Roblox: @Din_Mane601
-    </div>
+      <button type="submit">Send</button>
+    </form>
   </div>
 
   <script src="script.js"></script>
@@ -45,4 +46,5 @@
   <script src="feedback.js"></script>
 </body>
 </html>
+
 
