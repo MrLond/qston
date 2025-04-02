@@ -165,10 +165,12 @@ body {
   resize: none;
   font-family: inherit;
   font-size: 14px;
-  padding: 6px;
+  padding: 10px 12px;
   border-radius: 8px;
   border: 1px solid #ccc;
+  box-sizing: border-box;
 }
+
 
 #feedback-form button {
   margin-top: 10px;
