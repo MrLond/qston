@@ -85,21 +85,23 @@
     const auth = firebase.auth();
     const db = firebase.database();
 
-    function login() {
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
-      const rememberMe = document.getElementById("rememberMe").checked;
+   function login() {
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+  const rememberMe = document.getElementById("rememberMe").checked;
 
-      const persistence = rememberMe
-        ? firebase.auth.Auth.Persistence.LOCAL
-        : firebase.auth.Auth.Persistence.SESSION;
+  const persistence = rememberMe
+    ? firebase.auth.Auth.Persistence.LOCAL
+    : firebase.auth.Auth.Persistence.SESSION;
 
-      auth.setPersistence(persistence).then(() => {
-        return auth.signInWithEmailAndPassword(email, password);
-      }).catch(err => {
-        document.getElementById("login-error").textContent = err.message;
-      });
-    }
+  firebase.auth().setPersistence(persistence)
+    .then(() => {
+      return firebase.auth().signInWithEmailAndPassword(email, password);
+    })
+    .catch(err => {
+      document.getElementById("login-error").textContent = err.message;
+    });
+}
 
     function logout() {
       firebase.auth().signOut();
