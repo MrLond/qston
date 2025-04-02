@@ -192,3 +192,30 @@ body {
 #feedback-form button:hover {
   background-color: #4a148c;
 }
+
+.new-entry {
+  animation: fadeIn 0.5s ease-in-out;
+  background-color: #d4fcd4;
+}
+.moved-up {
+  animation: moveUp 0.5s ease-in-out;
+  background-color: #c8f7ff;
+}
+.moved-down {
+  animation: moveDown 0.5s ease-in-out;
+  background-color: #ffe0e0;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes moveUp {
+  0% { transform: translateY(10px); opacity: 0.5; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+@keyframes moveDown {
+  0% { transform: translateY(-10px); opacity: 0.5; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
