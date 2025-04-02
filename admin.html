@@ -48,6 +48,19 @@
     button:hover {
       background: #4a148c;
     }
+    .delete-btn {
+      background-color: #e53935;
+      color: white;
+      padding: 4px 10px;
+      font-size: 12px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 8px;
+    }
+    .delete-btn:hover {
+      background-color: #c62828;
+    }
   </style>
 </head>
 <body>
@@ -56,7 +69,6 @@
       <h2>🔐 Admin Login</h2>
       <input type="email" id="email" placeholder="Email" required />
       <input type="password" id="password" placeholder="Password" required />
-      <label><input type="checkbox" id="rememberMe" /> Remember me</label><br><br>
       <button onclick="login()">Login</button>
       <div id="login-error" style="color: red; margin-top: 10px;"></div>
     </div>
@@ -88,13 +100,9 @@
     function login() {
       const email = document.getElementById("email").value;
       const password = document.getElementById("password").value;
-      const rememberMe = document.getElementById("rememberMe").checked;
 
-      const persistence = rememberMe
-        ? firebase.auth.Auth.Persistence.LOCAL
-        : firebase.auth.Auth.Persistence.SESSION;
-
-      auth.setPersistence(persistence).then(() => {
+      // по умолчанию SESSION, можно при желании вернуть локальное хранение
+      auth.setPersistence(firebase.auth.Auth.Persistence.SESSION).then(() => {
         return auth.signInWithEmailAndPassword(email, password);
       }).catch(err => {
         document.getElementById("login-error").textContent = err.message;
@@ -135,7 +143,7 @@
           div.innerHTML = `
             <strong>${value.mood}</strong> - <em>${date}</em><br>
             ${value.message}
-            <br><button onclick="deleteFeedback('${key}')">🗑️ Delete</button>
+            <br><button class="delete-btn" onclick="deleteFeedback('${key}')">🗑️ Delete</button>
           `;
           feedbackList.appendChild(div);
         });
@@ -150,4 +158,3 @@
   </script>
 </body>
 </html>
-
