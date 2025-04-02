@@ -1,40 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Admin - Feedback Viewer</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
   <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #d1c4e9, #f8bbd0);
-      margin: 0;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      min-height: 100vh;
-    }
-
-    .admin-panel {
-      margin-top: 60px;
+    .centered-box {
       max-width: 600px;
-      width: 90%;
+      margin: 60px auto;
       background: #ffffffee;
-      padding: 30px 25px;
-      border-radius: 16px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
     }
-
-    .leaderboard-title {
-      font-size: 26px;
-      text-align: center;
-      margin-bottom: 20px;
-      color: #3949ab;
-      font-weight: 700;
-    }
-
     .feedback-entry {
       background: #f3e5f5;
       border-radius: 10px;
@@ -42,39 +21,84 @@
       margin-bottom: 10px;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     }
-
     .feedback-entry strong {
       color: #6a1b9a;
+    }
+    .login-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+    input[type="email"], input[type="password"] {
+      padding: 10px;
+      width: 100%;
+      max-width: 300px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 16px;
+    }
+    button {
+      padding: 10px 16px;
+      background-color: #6a1b9a;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
     }
   </style>
 </head>
 <body>
-  <div class="container admin-panel" id="admin-content" style="display: none">
+  <div class="centered-box" id="login-box">
+    <h2>🔐 Admin Login</h2>
+    <div class="login-box">
+      <input type="email" id="admin-email" placeholder="Email" required>
+      <input type="password" id="admin-password" placeholder="Password" required>
+      <button onclick="login()">Login</button>
+    </div>
+    <p id="error-msg" style="color: red;"></p>
+  </div>
+
+  <div class="centered-box" id="admin-panel" style="display:none">
     <div class="leaderboard-title">📥 Feedback Viewer</div>
     <div id="feedback-list">Loading feedback...</div>
   </div>
 
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
   <script>
-    const password = prompt("Enter admin password:");
-    const secret = "mysupersecretpass"; // замени на свой
+    const firebaseConfig = {
+      apiKey: "AIzaSyCs-9UakwRohTlZXlzmRNYjM6_9_UIdJkM",
+      authDomain: "donate-feedback.firebaseapp.com",
+      projectId: "donate-feedback",
+      storageBucket: "donate-feedback.appspot.com",
+      messagingSenderId: "122703118861",
+      appId: "1:122703118861:web:cf4169cebc71a746650b44"
+    };
 
-    if (password === secret) {
-      document.getElementById("admin-content").style.display = "block";
+    firebase.initializeApp(firebaseConfig);
 
-      const firebaseConfig = {
-        apiKey: "AIzaSyCs-9UakwRohTlZXlzmRNYjM6_9_UIdJkM",
-        authDomain: "donate-feedback.firebaseapp.com",
-        projectId: "donate-feedback",
-        storageBucket: "donate-feedback.firebasestorage.app",
-        messagingSenderId: "122703118861",
-        appId: "1:122703118861:web:cf4169cebc71a746650b44"
-      };
+    const auth = firebase.auth();
+    const db = firebase.database();
 
-      firebase.initializeApp(firebaseConfig);
-      const db = firebase.database();
+    function login() {
+      const email = document.getElementById("admin-email").value;
+      const password = document.getElementById("admin-password").value;
 
+      auth.signInWithEmailAndPassword(email, password)
+        .then(() => {
+          document.getElementById("login-box").style.display = "none";
+          document.getElementById("admin-panel").style.display = "block";
+          loadFeedbacks();
+        })
+        .catch(error => {
+          document.getElementById("error-msg").textContent = error.message;
+        });
+    }
+
+    function loadFeedbacks() {
       const feedbackList = document.getElementById("feedback-list");
 
       db.ref("feedbacks").orderByChild("timestamp").on("value", snapshot => {
@@ -98,10 +122,9 @@
           feedbackList.appendChild(div);
         });
       });
-    } else {
-  window.location.href = "https://qston.site";
-}
+    }
   </script>
 </body>
 </html>
+
 
