@@ -4,140 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Top Donators</title>
-  <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #d1c4e9, #f8bbd0);
-      margin: 0;
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    .container {
-      max-width: 600px;
-      width: 90%;
-      margin-top: 40px;
-      background: #ffffffee;
-      padding: 30px 25px;
-      border-radius: 16px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-    }
-    .message {
-      font-size: 22px;
-      font-weight: bold;
-      color: #6a1b9a;
-      text-align: center;
-      margin-bottom: 25px;
-    }
-    .leaderboard-title {
-      font-size: 26px;
-      text-align: center;
-      margin-bottom: 20px;
-      color: #3949ab;
-      font-weight: 700;
-    }
-    .leaderboard {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      counter-reset: leaderboard;
-    }
-    .leaderboard li {
-      padding: 12px 14px;
-      border-bottom: 1px solid #ccc;
-      display: flex;
-      justify-content: space-between;
-      font-size: 18px;
-      background-color: #f3e5f5;
-      border-radius: 10px;
-      margin-bottom: 10px;
-      transition: transform 0.3s ease;
-    }
-    .leaderboard li::before {
-      counter-increment: leaderboard;
-      content: counter(leaderboard) ". ";
-      font-weight: bold;
-      margin-right: 10px;
-      color: #888;
-    }
-    .leaderboard li.first {
-      background-color: #fff8dc;
-      animation: shineGold 3s infinite ease-in-out;
-    }
-    .leaderboard li.first::before {
-      content: counter(leaderboard) ". 🥇 ";
-      color: gold;
-    }
-    .leaderboard li.second {
-      background-color: #f0f0f0;
-      animation: shineSilver 3s infinite ease-in-out;
-    }
-    .leaderboard li.second::before {
-      content: counter(leaderboard) ". 🥈 ";
-      color: silver;
-    }
-    .leaderboard li.third {
-      background-color: #fbe5d6;
-      animation: shineBronze 3s infinite ease-in-out;
-    }
-    .leaderboard li.third::before {
-      content: counter(leaderboard) ". 🥉 ";
-      color: #cd7f32;
-    }
-    .leaderboard li:hover {
-      transform: scale(1.03);
-      box-shadow: 0 0 20px rgba(138, 43, 226, 0.2), 0 0 30px rgba(138, 43, 226, 0.1);
-    }
-    .description {
-      margin-top: 30px;
-      font-size: 16px;
-      color: #444;
-      padding-top: 20px;
-      border-top: 2px solid #ce93d8;
-    }
-    .description-title {
-      font-size: 18px;
-      font-weight: 600;
-      margin-bottom: 10px;
-      color: #8e24aa;
-    }
-    .rbx {
-      width: 16px;
-      height: 16px;
-      vertical-align: middle;
-      margin-right: 5px;
-    }
-    #last-update {
-      text-align: center;
-      font-size: 14px;
-      color: #555;
-      margin-top: 10px;
-    }
-    @keyframes shineGold {
-      0% { box-shadow: 0 0 10px rgba(255, 215, 0, 0.3); }
-      50% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.6); }
-      100% { box-shadow: 0 0 10px rgba(255, 215, 0, 0.3); }
-    }
-    @keyframes shineSilver {
-      0% { box-shadow: 0 0 10px rgba(192, 192, 192, 0.3); }
-      50% { box-shadow: 0 0 20px rgba(192, 192, 192, 0.6); }
-      100% { box-shadow: 0 0 10px rgba(192, 192, 192, 0.3); }
-    }
-    @keyframes shineBronze {
-      0% { box-shadow: 0 0 10px rgba(205, 127, 50, 0.3); }
-      50% { box-shadow: 0 0 20px rgba(205, 127, 50, 0.6); }
-      100% { box-shadow: 0 0 10px rgba(205, 127, 50, 0.3); }
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="container">
     <div class="message">
       🚀 Welcome🌟<br>
-Saving for gamepasses — 51 / 1500 🎯<br> 
-Support = your name on the board 💖
-
+      Saving for gamepasses — 51 / 1500 🎯<br> 
+      Support = your name on the board 💖
     </div>
 
     <div class="leaderboard-title">Top 10 Donators</div>
@@ -150,74 +24,10 @@ Support = your name on the board 💖
       Live-updating leaderboard ⏱️<br>
       Climb by donating more 💸<br>
       Roblox: @Din_Mane601
-
     </div>
   </div>
 
-  <script>
-    const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS3pvltinLJIsHPvPrwbpOw7r7wqMfrsjLjNfpKQTErP0ZHoROj28ZeTkjn4hZgISYaBiMl30Z3UdIP/pub?gid=0&single=true&output=csv";
-    let lastUpdated = Date.now();
-
-    function updateTimeSinceRefresh() {
-      const now = Date.now();
-      const diff = Math.floor((now - lastUpdated) / 1000);
-      let text = "Updated just now";
-
-      if (diff >= 60) {
-        const mins = Math.floor(diff / 60);
-        text = `Updated ${mins} minute${mins === 1 ? "" : "s"} ago`;
-      } else if (diff > 0) {
-        text = `Updated ${diff} second${diff === 1 ? "" : "s"} ago`;
-      }
-
-      document.getElementById("last-update").textContent = text;
-    }
-
-    setInterval(updateTimeSinceRefresh, 1000); // обновляем отображение каждую секунду
-
-    function loadLeaderboard() {
-      fetch(sheetURL)
-        .then(res => res.text())
-        .then(csv => {
-          const rows = csv.trim().split("\n").slice(1);
-          const data = rows.map(row => {
-            const cols = row.split(",");
-            return {
-              nickname: cols[1]?.trim(),
-              amount: parseInt(cols[2])
-            };
-          });
-
-          data.sort((a, b) => b.amount - a.amount);
-
-          const list = document.getElementById("leaderboard");
-          list.innerHTML = "";
-
-          data.slice(0, 10).forEach((entry, index) => {
-            const li = document.createElement("li");
-            if (index === 0) li.classList.add("first");
-            else if (index === 1) li.classList.add("second");
-            else if (index === 2) li.classList.add("third");
-
-            li.innerHTML = `
-              <span>${entry.nickname}</span>
-              <span><img src="robux.png" class="rbx">${entry.amount}</span>
-            `;
-            list.appendChild(li);
-          });
-
-          // обновляем время последнего обновления
-          lastUpdated = Date.now();
-          updateTimeSinceRefresh();
-        });
-    }
-
-    loadLeaderboard();
-
-    // Обновление каждые 10 секунд
-    setInterval(() => {
-      loadLeaderboard();
-    }, 60000);
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
+
