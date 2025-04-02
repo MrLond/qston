@@ -39,9 +39,20 @@ function loadLeaderboard() {
 
       data.slice(0, 10).forEach((entry, index) => {
         const li = document.createElement("li");
+
         if (index === 0) li.classList.add("first");
         else if (index === 1) li.classList.add("second");
         else if (index === 2) li.classList.add("third");
+
+        // === Сравнение с предыдущим топом ===
+        const prevIndex = previousData.findIndex(e => e.nickname === entry.nickname);
+        if (prevIndex === -1) {
+          li.classList.add("new-entry");
+        } else if (prevIndex > index) {
+          li.classList.add("moved-up");
+        } else if (prevIndex < index) {
+          li.classList.add("moved-down");
+        }
 
         li.innerHTML = `
           <span>${entry.nickname}</span>
@@ -50,10 +61,13 @@ function loadLeaderboard() {
         list.appendChild(li);
       });
 
+      previousData = data.slice(0, 10); // сохраняем топ
+
       lastUpdated = Date.now();
       updateTimeSinceRefresh();
     });
 }
+
 
 loadLeaderboard();
 
