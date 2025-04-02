@@ -1,5 +1,6 @@
 const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS3pvltinLJIsHPvPrwbpOw7r7wqMfrsjLjNfpKQTErP0ZHoROj28ZeTkjn4hZgISYaBiMl30Z3UdIP/pub?gid=0&single=true&output=csv";
 let lastUpdated = Date.now();
+let previousData = [];
 
 function updateTimeSinceRefresh() {
   const now = Date.now();
