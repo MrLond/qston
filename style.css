@@ -195,15 +195,15 @@ body {
 
 .new-entry {
   animation: fadeIn 0.5s ease-in-out;
-  background-color: #d4fcd4;
+  background-color: #d4fcd4 !important;
 }
 .moved-up {
   animation: moveUp 0.5s ease-in-out;
-  background-color: #c8f7ff;
+  background-color: #c8f7ff !important;
 }
 .moved-down {
   animation: moveDown 0.5s ease-in-out;
-  background-color: #ffe0e0;
+  background-color: #ffe0e0 !important;
 }
 
 @keyframes fadeIn {
@@ -218,4 +218,3 @@ body {
   0% { transform: translateY(-10px); opacity: 0.5; }
   100% { transform: translateY(0); opacity: 1; }
 }
-
