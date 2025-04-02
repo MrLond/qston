@@ -42,6 +42,8 @@
       list-style: none;
       padding: 0;
       margin: 0;
+      list-style-position: inside;
+      counter-reset: leaderboard;
     }
     .leaderboard li {
       padding: 12px 14px;
@@ -52,6 +54,13 @@
       background-color: #f3e5f5;
       border-radius: 10px;
       margin-bottom: 10px;
+    }
+    .leaderboard li::before {
+      counter-increment: leaderboard;
+      content: counter(leaderboard) ". ";
+      font-weight: bold;
+      margin-right: 10px;
+      color: #6a1b9a;
     }
     .leaderboard li:last-child {
       border-bottom: none;
@@ -77,12 +86,12 @@
     <div class="message">
       <!-- Просто меняй текст ниже, это твой титул -->
       🚀 Welcome🌟<br>
-       Saving for gamepasses in Blackhawk Rescue Mission 5 <br>
-       51/1500
+      Saving for gamepasses in Blackhawk Rescue Mission 5 <br>
+      51/1500
     </div>
 
     <div class="leaderboard-title">Top 10 Donators</div>
-    <ul class="leaderboard">
+    <ol class="leaderboard">
       <li><span>@lamtheonexdddddd</span><span>1000</span></li>
       <li><span>@userrsophh</span><span>1000</span></li>
       <li><span>@bhashi123</span><span>500</span></li>
@@ -93,7 +102,7 @@
       <li><span>@craky03UWU1</span><span>10</span></li>
       <li><span>@Hello8893</span><span>10</span></li>
       <li><span>@RR14YT</span><span>5</span></li>
-    </ul>
+    </ol>
 
     <!-- Описание (Description) -->
     <div class="description">
