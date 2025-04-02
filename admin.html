@@ -6,9 +6,35 @@
   <title>Admin - Feedback Viewer</title>
   <link rel="stylesheet" href="style.css">
   <style>
-    .admin-panel {
-      margin-top: 40px;
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #d1c4e9, #f8bbd0);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
     }
+
+    .admin-panel {
+      margin-top: 60px;
+      max-width: 600px;
+      width: 90%;
+      background: #ffffffee;
+      padding: 30px 25px;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+
+    .leaderboard-title {
+      font-size: 26px;
+      text-align: center;
+      margin-bottom: 20px;
+      color: #3949ab;
+      font-weight: 700;
+    }
+
     .feedback-entry {
       background: #f3e5f5;
       border-radius: 10px;
@@ -16,13 +42,14 @@
       margin-bottom: 10px;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     }
+
     .feedback-entry strong {
       color: #6a1b9a;
     }
   </style>
 </head>
 <body>
-  <div class="container admin-panel">
+  <div class="container admin-panel" id="admin-content" style="display: none">
     <div class="leaderboard-title">📥 Feedback Viewer</div>
     <div id="feedback-list">Loading feedback...</div>
   </div>
@@ -30,41 +57,51 @@
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
   <script>
-    const firebaseConfig = {
-      apiKey: "AIzaSyCs-9UakwRohTlZXlzmRNYjM6_9_UIdJkM",
-      authDomain: "donate-feedback.firebaseapp.com",
-      projectId: "donate-feedback",
-      storageBucket: "donate-feedback.firebasestorage.app",
-      messagingSenderId: "122703118861",
-      appId: "1:122703118861:web:cf4169cebc71a746650b44"
-    };
+    const password = prompt("Enter admin password:");
+    const secret = "mysupersecretpass"; // замени на свой
 
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.database();
+    if (password === secret) {
+      document.getElementById("admin-content").style.display = "block";
 
-    const feedbackList = document.getElementById("feedback-list");
+      const firebaseConfig = {
+        apiKey: "AIzaSyCs-9UakwRohTlZXlzmRNYjM6_9_UIdJkM",
+        authDomain: "donate-feedback.firebaseapp.com",
+        projectId: "donate-feedback",
+        storageBucket: "donate-feedback.firebasestorage.app",
+        messagingSenderId: "122703118861",
+        appId: "1:122703118861:web:cf4169cebc71a746650b44"
+      };
 
-    db.ref("feedbacks").orderByChild("timestamp").on("value", snapshot => {
-      feedbackList.innerHTML = "";
-      const data = snapshot.val();
+      firebase.initializeApp(firebaseConfig);
+      const db = firebase.database();
 
-      if (!data) {
-        feedbackList.innerHTML = "<p>No feedback yet.</p>";
-        return;
-      }
+      const feedbackList = document.getElementById("feedback-list");
 
-      const entries = Object.entries(data).reverse();
-      entries.forEach(([key, value]) => {
-        const div = document.createElement("div");
-        div.className = "feedback-entry";
-        const date = new Date(value.timestamp).toLocaleString();
-        div.innerHTML = `
-          <strong>${value.mood}</strong> - <em>${date}</em><br>
-          ${value.message}
-        `;
-        feedbackList.appendChild(div);
+      db.ref("feedbacks").orderByChild("timestamp").on("value", snapshot => {
+        feedbackList.innerHTML = "";
+        const data = snapshot.val();
+
+        if (!data) {
+          feedbackList.innerHTML = "<p>No feedback yet.</p>";
+          return;
+        }
+
+        const entries = Object.entries(data).reverse();
+        entries.forEach(([key, value]) => {
+          const div = document.createElement("div");
+          div.className = "feedback-entry";
+          const date = new Date(value.timestamp).toLocaleString();
+          div.innerHTML = `
+            <strong>${value.mood}</strong> - <em>${date}</em><br>
+            ${value.message}
+          `;
+          feedbackList.appendChild(div);
+        });
       });
-    });
+    } else {
+      document.body.innerHTML = "<h2 style='color: crimson; text-align: center; margin-top: 100px;'>Access Denied</h2>";
+    }
   </script>
 </body>
 </html>
+
