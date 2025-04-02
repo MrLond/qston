@@ -1,6 +1,8 @@
 const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS3pvltinLJIsHPvPrwbpOw7r7wqMfrsjLjNfpKQTErP0ZHoROj28ZeTkjn4hZgISYaBiMl30Z3UdIP/pub?gid=0&single=true&output=csv";
 let lastUpdated = Date.now();
-let previousData = [];
+
+// Загружаем предыдущее состояние из localStorage
+let previousData = JSON.parse(localStorage.getItem("previousData")) || [];
 
 function updateTimeSinceRefresh() {
   const now = Date.now();
@@ -64,7 +66,10 @@ function loadLeaderboard() {
         list.appendChild(li);
       });
 
+      // Обновляем предыдущее состояние и сохраняем его
       previousData = data.slice(0, 10);
+      localStorage.setItem("previousData", JSON.stringify(previousData));
+
       lastUpdated = Date.now();
       updateTimeSinceRefresh();
     });
@@ -73,5 +78,6 @@ function loadLeaderboard() {
 loadLeaderboard();
 setInterval(() => {
   loadLeaderboard();
-}, 15000); // обновляем каждые 15 сек
+}, 15000);
+
 
