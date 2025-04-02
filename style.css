@@ -124,38 +124,43 @@ body {
   100% { box-shadow: 0 0 10px rgba(205, 127, 50, 0.3); }
 }
 
-/* Feedback form styling */
 #feedback-form {
   position: absolute;
-  top: 20px;
-  right: 20px;
-  width: 280px;
-  background: #f3e5f5;
+  top: 40px;
+  right: calc(50% - 320px); /* привязка ближе к контейнеру */
+  width: 250px;
+  background: #f8e6f8;
   padding: 15px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  border-radius: 16px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.1);
   font-size: 14px;
   z-index: 1000;
+  border: 1px solid #e1bee7;
+  transition: transform 0.3s ease;
 }
+
 #feedback-form textarea {
   width: 100%;
   resize: none;
   font-family: inherit;
   font-size: 14px;
   padding: 6px;
-  border-radius: 6px;
+  border-radius: 8px;
   border: 1px solid #ccc;
 }
+
 #feedback-form button {
   margin-top: 10px;
-  padding: 6px 12px;
+  padding: 8px 14px;
   border: none;
   background-color: #6a1b9a;
   color: white;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.3s;
+  width: 100%;
 }
+
 #feedback-form button:hover {
   background-color: #4a148c;
 }
