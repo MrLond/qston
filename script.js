@@ -40,19 +40,21 @@ function loadLeaderboard() {
       data.slice(0, 10).forEach((entry, index) => {
         const li = document.createElement("li");
 
-        // Места
         if (index === 0) li.classList.add("first");
         else if (index === 1) li.classList.add("second");
         else if (index === 2) li.classList.add("third");
 
-        // Подсветка изменений
-        const prevIndex = previousData.findIndex(e => e.nickname === entry.nickname);
-        if (prevIndex === -1) {
+        const prevEntry = previousData.find(e => e.nickname === entry.nickname);
+
+        if (!prevEntry) {
           li.classList.add("new-entry");
-        } else if (prevIndex > index) {
-          li.classList.add("moved-up");
-        } else if (prevIndex < index) {
-          li.classList.add("moved-down");
+        } else if (prevEntry.amount !== entry.amount) {
+          const prevIndex = previousData.indexOf(prevEntry);
+          if (prevIndex > index) {
+            li.classList.add("moved-up");
+          } else if (prevIndex < index) {
+            li.classList.add("moved-down");
+          }
         }
 
         li.innerHTML = `
@@ -62,7 +64,6 @@ function loadLeaderboard() {
         list.appendChild(li);
       });
 
-      // Сохраняем текущее состояние
       previousData = data.slice(0, 10);
       lastUpdated = Date.now();
       updateTimeSinceRefresh();
@@ -72,5 +73,5 @@ function loadLeaderboard() {
 loadLeaderboard();
 setInterval(() => {
   loadLeaderboard();
-}, 15000);
+}, 15000); // обновляем каждые 15 сек
 
