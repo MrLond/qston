@@ -7,6 +7,17 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <form id="feedback-form">
+    <label for="feedback-message">💬 Your Feedback:</label><br>
+    <textarea id="feedback-message" name="message" rows="4" required></textarea><br><br>
+
+    <label>How do you feel?</label><br>
+    <input type="radio" name="mood" value="👍" required> 👍
+    <input type="radio" name="mood" value="👎"> 👎<br><br>
+
+    <button type="submit">Send</button>
+  </form>
+
   <div class="container">
     <div class="message">
       🚀 Welcome🌟<br>
@@ -25,17 +36,6 @@
       Climb by donating more 💸<br>
       Roblox: @Din_Mane601
     </div>
-
-    <form id="feedback-form" style="margin-top: 40px;">
-      <label for="feedback-message">💬 Your Feedback:</label><br>
-      <textarea id="feedback-message" name="message" rows="4" required></textarea><br><br>
-
-      <label>How do you feel?</label><br>
-      <input type="radio" name="mood" value="👍" required> 👍
-      <input type="radio" name="mood" value="👎"> 👎<br><br>
-
-      <button type="submit">Send</button>
-    </form>
   </div>
 
   <script src="script.js"></script>
