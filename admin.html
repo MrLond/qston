@@ -1,57 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Admin - Feedback Viewer</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
   <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #d1c4e9, #f8bbd0);
-      margin: 0;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      flex-direction: column;
-    }
-
-    .login-container, .admin-panel {
-      background: #ffffffee;
-      padding: 25px;
+    .container {
+      max-width: 600px;
+      margin: 40px auto;
+      background: #fff0ff;
+      padding: 24px;
       border-radius: 14px;
-      box-shadow: 0 6px 16px rgba(0,0,0,0.2);
-      max-width: 500px;
-      width: 100%;
-      display: none;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
     }
-
-    .login-container input {
-      width: 100%;
-      margin-bottom: 12px;
-      padding: 8px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      font-size: 14px;
-    }
-
-    .login-container button {
-      width: 100%;
-      padding: 10px;
-      background: #6a1b9a;
-      color: white;
-      font-weight: bold;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-
-    .login-container button:hover {
-      background: #4a148c;
-    }
-
     .feedback-entry {
       background: #f3e5f5;
       border-radius: 10px;
@@ -62,94 +24,117 @@
     .feedback-entry strong {
       color: #6a1b9a;
     }
+    .login-box {
+      text-align: center;
+    }
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      margin-bottom: 10px;
+      border-radius: 8px;
+    }
+    button {
+      padding: 10px 20px;
+      background: #6a1b9a;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      width: 100%;
+      font-weight: bold;
+    }
+    button:hover {
+      background: #4a148c;
+    }
   </style>
 </head>
 <body>
-  <div class="login-container">
-    <h2>Admin Login</h2>
-    <input type="email" id="email" placeholder="Email" required>
-    <input type="password" id="password" placeholder="Password" required>
-    <label><input type="checkbox" id="rememberMe"> Remember me</label>
-    <button onclick="login()">Login</button>
-    <p id="login-error" style="color: red; font-size: 14px;"></p>
+  <div class="container" id="auth-container">
+    <div class="login-box">
+      <h2>🔐 Admin Login</h2>
+      <input type="email" id="email" placeholder="Email" required />
+      <input type="password" id="password" placeholder="Password" required />
+      <label><input type="checkbox" id="rememberMe" /> Remember me</label><br><br>
+      <button onclick="login()">Login</button>
+      <div id="login-error" style="color: red; margin-top: 10px;"></div>
+    </div>
   </div>
 
-  <div class="container admin-panel">
+  <div class="container admin-panel" id="admin-panel" style="display: none;">
     <div class="leaderboard-title">📥 Feedback Viewer</div>
+    <button onclick="logout()" style="margin-bottom: 20px;">Logout</button>
     <div id="feedback-list">Loading feedback...</div>
   </div>
 
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
   <script>
     const firebaseConfig = {
       apiKey: "AIzaSyCs-9UakwRohTlZXlzmRNYjM6_9_UIdJkM",
       authDomain: "donate-feedback.firebaseapp.com",
       projectId: "donate-feedback",
-      storageBucket: "donate-feedback.firebasestorage.app",
+      storageBucket: "donate-feedback.appspot.com",
       messagingSenderId: "122703118861",
       appId: "1:122703118861:web:cf4169cebc71a746650b44"
     };
 
     firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.database();
 
     function login() {
       const email = document.getElementById("email").value;
       const password = document.getElementById("password").value;
-      const rememberMe = document.getElementById("rememberMe").checked;
 
-      const persistence = rememberMe
-        ? firebase.auth.Auth.Persistence.LOCAL
-        : firebase.auth.Auth.Persistence.SESSION;
-
-      firebase.auth().setPersistence(persistence)
-        .then(() => {
-          return firebase.auth().signInWithEmailAndPassword(email, password);
-        })
-        .then(() => {
-          sessionStorage.setItem("rememberMe", rememberMe);
-        })
-        .catch(err => {
-          document.getElementById("login-error").textContent = err.message;
-        });
+    function logout() {
+      firebase.auth().signOut();
     }
 
-    function loadFeedback() {
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        document.getElementById("auth-container").style.display = "none";
+        document.getElementById("admin-panel").style.display = "block";
+        loadFeedbacks();
+      } else {
+        document.getElementById("auth-container").style.display = "block";
+        document.getElementById("admin-panel").style.display = "none";
+      }
+    });
+
+    function loadFeedbacks() {
       const feedbackList = document.getElementById("feedback-list");
-      firebase.database().ref("feedbacks").orderByChild("timestamp").on("value", snapshot => {
+      db.ref("feedbacks").orderByChild("timestamp").on("value", snapshot => {
         feedbackList.innerHTML = "";
         const data = snapshot.val();
+
         if (!data) {
           feedbackList.innerHTML = "<p>No feedback yet.</p>";
           return;
         }
+
         const entries = Object.entries(data).reverse();
         entries.forEach(([key, value]) => {
           const div = document.createElement("div");
           div.className = "feedback-entry";
           const date = new Date(value.timestamp).toLocaleString();
-          div.innerHTML = `<strong>${value.mood}</strong> - <em>${date}</em><br>${value.message}`;
+          div.innerHTML = `
+            <strong>${value.mood}</strong> - <em>${date}</em><br>
+            ${value.message}
+            <br><button onclick="deleteFeedback('${key}')">🗑️ Delete</button>
+          `;
           feedbackList.appendChild(div);
         });
       });
     }
 
-    firebase.auth().onAuthStateChanged(user => {
-      const rememberMe = sessionStorage.getItem("rememberMe") === "true";
-
-      if (user) {
-        if (!rememberMe) {
-          firebase.auth().signOut();
-          return;
-        }
-        document.querySelector(".login-container").style.display = "none";
-        document.querySelector(".admin-panel").style.display = "block";
-        loadFeedback();
-      } else {
-        document.querySelector(".login-container").style.display = "block";
+    function deleteFeedback(key) {
+      if (confirm("Are you sure you want to delete this feedback?")) {
+        db.ref("feedbacks/" + key).remove();
       }
-    });
+    }
   </script>
 </body>
 </html>
