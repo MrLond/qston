@@ -19,7 +19,7 @@ function updateTimeSinceRefresh() {
 setInterval(updateTimeSinceRefresh, 1000); // обновляем отображение каждую секунду
 
 function loadLeaderboard() {
-  fetch(sheetURL)
+  fetch(`${sheetURL}&t=${Date.now()}`)
     .then(res => res.text())
     .then(csv => {
       const rows = csv.trim().split("\n").slice(1);
