@@ -17,13 +17,8 @@ body {
   justify-content: center;
   align-items: flex-start;
   flex-wrap: wrap;
-  padding-top: 40px;
-
-  max-width: 1000px;  /* ограничение по ширине */
-  margin-left: auto;  /* центрировать по горизонтали */
-  margin-right: auto;
-  width: 100%;         /* чтобы не сужалось */
-  box-sizing: border-box;
+  max-width: 1000px; 
+  margin: 0 auto;    
 }
 
 .container {
