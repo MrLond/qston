@@ -17,7 +17,7 @@ function updateTimeSinceRefresh() {
   document.getElementById("last-update").textContent = text;
 }
 
-setInterval(updateTimeSinceRefresh, 1000); // обновляем отображение каждую секунду
+setInterval(updateTimeSinceRefresh, 1000);
 
 function loadLeaderboard() {
   fetch(`${sheetURL}&t=${Date.now()}`)
@@ -40,11 +40,12 @@ function loadLeaderboard() {
       data.slice(0, 10).forEach((entry, index) => {
         const li = document.createElement("li");
 
+        // Места
         if (index === 0) li.classList.add("first");
         else if (index === 1) li.classList.add("second");
         else if (index === 2) li.classList.add("third");
 
-        // === Сравнение с предыдущим топом ===
+        // Подсветка изменений
         const prevIndex = previousData.findIndex(e => e.nickname === entry.nickname);
         if (prevIndex === -1) {
           li.classList.add("new-entry");
@@ -61,17 +62,15 @@ function loadLeaderboard() {
         list.appendChild(li);
       });
 
-      previousData = data.slice(0, 10); // сохраняем топ
-
+      // Сохраняем текущее состояние
+      previousData = data.slice(0, 10);
       lastUpdated = Date.now();
       updateTimeSinceRefresh();
     });
 }
 
-
 loadLeaderboard();
-
-// Обновление каждые 60 секунд
 setInterval(() => {
   loadLeaderboard();
-}, 60000);
+}, 15000);
+
