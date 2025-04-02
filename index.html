@@ -54,6 +54,7 @@
       background-color: #f3e5f5;
       border-radius: 10px;
       margin-bottom: 10px;
+      transition: transform 0.3s ease;
     }
     .leaderboard li::before {
       counter-increment: leaderboard;
@@ -63,31 +64,38 @@
       color: #888;
     }
 
-    /* Пьедестал */
+    /* 🥇🥈🥉 Места с эмодзи и сиянием */
     .leaderboard li.first {
       background-color: #fff8dc;
-      animation: shine 3s infinite ease-in-out;
-      transition: transform 0.3s ease;
+      animation: shineGold 3s infinite ease-in-out;
     }
     .leaderboard li.first::before {
+      content: counter(leaderboard) ". 🥇 ";
       color: gold;
-    }
-    .leaderboard li.first:hover {
-      transform: scale(1.03);
     }
 
     .leaderboard li.second {
       background-color: #f0f0f0;
+      animation: shineSilver 3s infinite ease-in-out;
     }
     .leaderboard li.second::before {
+      content: counter(leaderboard) ". 🥈 ";
       color: silver;
     }
 
     .leaderboard li.third {
       background-color: #fbe5d6;
+      animation: shineBronze 3s infinite ease-in-out;
     }
     .leaderboard li.third::before {
+      content: counter(leaderboard) ". 🥉 ";
       color: #cd7f32;
+    }
+
+    /* Hover-анимация для всех остальных */
+    .leaderboard li:hover {
+      transform: scale(1.03);
+      box-shadow: 0 0 20px rgba(138, 43, 226, 0.2), 0 0 30px rgba(138, 43, 226, 0.1);
     }
 
     .leaderboard li:last-child {
@@ -109,22 +117,28 @@
       color: #8e24aa;
     }
 
-    @keyframes shine {
-      0% {
-        box-shadow: 0 0 10px rgba(255, 215, 0, 0.3), 0 0 20px rgba(255, 215, 0, 0.2);
-      }
-      50% {
-        box-shadow: 0 0 20px rgba(255, 215, 0, 0.6), 0 0 40px rgba(255, 215, 0, 0.4);
-      }
-      100% {
-        box-shadow: 0 0 10px rgba(255, 215, 0, 0.3), 0 0 20px rgba(255, 215, 0, 0.2);
-      }
+    /* Анимации для пьедестала */
+    @keyframes shineGold {
+      0% { box-shadow: 0 0 10px rgba(255, 215, 0, 0.3); }
+      50% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.6); }
+      100% { box-shadow: 0 0 10px rgba(255, 215, 0, 0.3); }
+    }
+
+    @keyframes shineSilver {
+      0% { box-shadow: 0 0 10px rgba(192, 192, 192, 0.3); }
+      50% { box-shadow: 0 0 20px rgba(192, 192, 192, 0.6); }
+      100% { box-shadow: 0 0 10px rgba(192, 192, 192, 0.3); }
+    }
+
+    @keyframes shineBronze {
+      0% { box-shadow: 0 0 10px rgba(205, 127, 50, 0.3); }
+      50% { box-shadow: 0 0 20px rgba(205, 127, 50, 0.6); }
+      100% { box-shadow: 0 0 10px rgba(205, 127, 50, 0.3); }
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <!-- Редактируемое сообщение -->
     <div class="message">
       🚀 Welcome🌟<br>
       Saving for gamepasses in Blackhawk Rescue Mission 5 <br>
@@ -155,4 +169,5 @@
   </div>
 </body>
 </html>
+
 
