@@ -13,12 +13,12 @@ body {
 
 .main-content {
   display: flex;
-  gap: 40px;
   justify-content: center;
   align-items: flex-start;
-  flex-wrap: wrap;
-  max-width: 1000px; 
-  margin: 0 auto;    
+  padding-top: 40px;
+  gap: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .container {
