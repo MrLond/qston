@@ -108,6 +108,12 @@
       vertical-align: middle;
       margin-right: 5px;
     }
+    #last-update {
+      text-align: center;
+      font-size: 14px;
+      color: #555;
+      margin-top: 10px;
+    }
     @keyframes shineGold {
       0% { box-shadow: 0 0 10px rgba(255, 215, 0, 0.3); }
       50% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.6); }
@@ -136,16 +142,36 @@
     <div class="leaderboard-title">Top 10 Donators</div>
     <ol class="leaderboard" id="leaderboard"></ol>
 
+    <div id="last-update">Updated just now</div>
+
     <div class="description">
       <div class="description-title">📌 Description</div>
       Site in dev! <br>
-      To get into the leaderboard, you need to donate more than the person above you. 💖<br>
+      To get into the leaderboard, you need to donate more than the person above you.💖<br>
       My roblox user - @Din_Mane601
     </div>
   </div>
 
   <script>
     const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS3pvltinLJIsHPvPrwbpOw7r7wqMfrsjLjNfpKQTErP0ZHoROj28ZeTkjn4hZgISYaBiMl30Z3UdIP/pub?gid=0&single=true&output=csv";
+    let lastUpdated = Date.now();
+
+    function updateTimeSinceRefresh() {
+      const now = Date.now();
+      const diff = Math.floor((now - lastUpdated) / 1000);
+      let text = "Updated just now";
+
+      if (diff >= 60) {
+        const mins = Math.floor(diff / 60);
+        text = `Updated ${mins} minute${mins === 1 ? "" : "s"} ago`;
+      } else if (diff > 0) {
+        text = `Updated ${diff} second${diff === 1 ? "" : "s"} ago`;
+      }
+
+      document.getElementById("last-update").textContent = text;
+    }
+
+    setInterval(updateTimeSinceRefresh, 1000); // обновляем отображение каждую секунду
 
     function loadLeaderboard() {
       fetch(sheetURL)
@@ -177,19 +203,19 @@
             `;
             list.appendChild(li);
           });
+
+          // обновляем время последнего обновления
+          lastUpdated = Date.now();
+          updateTimeSinceRefresh();
         });
     }
 
     loadLeaderboard();
 
-    // Автообновление каждые 30 секунд
+    // Обновление каждые 10 секунд
     setInterval(() => {
       loadLeaderboard();
     }, 10000);
   </script>
 </body>
 </html>
-
-</html>
-
-
