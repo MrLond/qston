@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - Feedback Viewer</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .admin-panel {
+      margin-top: 40px;
+    }
+    .feedback-entry {
+      background: #f3e5f5;
+      border-radius: 10px;
+      padding: 10px;
+      margin-bottom: 10px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+    .feedback-entry strong {
+      color: #6a1b9a;
+    }
+  </style>
+</head>
+<body>
+  <div class="container admin-panel">
+    <div class="leaderboard-title">📥 Feedback Viewer</div>
+    <div id="feedback-list">Loading feedback...</div>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyCs-9UakwRohTlZXlzmRNYjM6_9_UIdJkM",
+      authDomain: "donate-feedback.firebaseapp.com",
+      projectId: "donate-feedback",
+      storageBucket: "donate-feedback.firebasestorage.app",
+      messagingSenderId: "122703118861",
+      appId: "1:122703118861:web:cf4169cebc71a746650b44"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    const feedbackList = document.getElementById("feedback-list");
+
+    db.ref("feedbacks").orderByChild("timestamp").on("value", snapshot => {
+      feedbackList.innerHTML = "";
+      const data = snapshot.val();
+
+      if (!data) {
+        feedbackList.innerHTML = "<p>No feedback yet.</p>";
+        return;
+      }
+
+      const entries = Object.entries(data).reverse();
+      entries.forEach(([key, value]) => {
+        const div = document.createElement("div");
+        div.className = "feedback-entry";
+        const date = new Date(value.timestamp).toLocaleString();
+        div.innerHTML = `
+          <strong>${value.mood}</strong> - <em>${date}</em><br>
+          ${value.message}
+        `;
+        feedbackList.appendChild(div);
+      });
+    });
+  </script>
+</body>
+</html>
